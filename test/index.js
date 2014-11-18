@@ -8,11 +8,15 @@ describe('gblo generator', function () {
     'package.json',
     '.gitignore',
     '.csscomb.json',
-    'gulpfile.js'
+    'gulpfile.js',
+    'app/index.jade',
+    'app/styles/style.scss',
+    'app/scripts/script.coffee',
   ];
 
   var expectedContent = [
-    ['package.json', /"name": "tmp"/]
+    ['package.json', /"name": "tmp"/],
+    ['app/index.jade', /title\(tmp\)/]
   ];
 
   var runGen;
