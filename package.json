@@ -4,7 +4,7 @@
   "description": "yeoman generator to create blog from git",
   "main": "app/index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec --timeout 5000"
   },
   "files": [
     "app"
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/shgtkshruch/generator-gblo",
   "dependencies": {
+    "github": "^0.2.2",
     "yeoman-generator": "^0.18.0"
   },
   "devDependencies": {

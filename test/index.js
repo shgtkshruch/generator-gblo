@@ -1,6 +1,8 @@
 var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
+var Github = require('../lib/github');
+var git = require('../lib/git');
 
 describe('gblo generator', function () {
 
@@ -19,19 +21,50 @@ describe('gblo generator', function () {
     ['app/index.jade', /title\(tmp\)/]
   ];
 
+  var expectedGit = 'notes.displayref refs/notes/*\nnotes.rewriteref refs/notes/*';
+
   var runGen;
 
-  beforeEach(function() {
+  before(function() {
     runGen = helpers
       .run(path.join(__dirname, '../app'))
       .inDir(path.join(__dirname, '.tmp'));
   });
 
-  it('create expexted files', function (done) {
-    runGen.on('end', function () {
-      assert.file(expected);
-      assert.fileContent(expectedContent);
+  describe('run generator', function () {
+
+    describe('file', function () {
+      it('create expexted files', function (done) {
+        runGen.on('end', function () {
+          assert.file(expected);
+          assert.fileContent(expectedContent);
+          done();
+        });
+      });
+    });
+
+    describe('git', function () {
+      it('create expected notes config', function (done) {
+        git(['config', '--get-regexp', 'notes'], function (res) {
+          assert.deepEqual(res, expectedGit);
+          done();
+        });
+      });
+
+      it('create expected remote config', function (done) {
+        git(['config', '--get', 'remote.origin.url'], function (res) {
+          assert.deepEqual(res, 'git@github.com:shgtkshruch/tmp.git');
+          done();
+        });
+      });
+    });
+  });
+
+  after(function (done) {
+    new Github('shgtkshruch', 'tmp').delete(function (err, res) {
+      if (err) throw new Error(err);
       done();
     });
   });
+
 });
