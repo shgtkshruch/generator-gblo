@@ -1,0 +1,33 @@
+{
+  "name": "generator-gblo",
+  "version": "0.0.0",
+  "description": "yeoman generator to create blog from git",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "files": [
+    "app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shgtkshruch/generator-gblo.git"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "git",
+    "blog"
+  ],
+  "author": "shgtkshruch <shgtkshruch@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shgtkshruch/generator-gblo/issues"
+  },
+  "homepage": "https://github.com/shgtkshruch/generator-gblo",
+  "dependencies": {
+    "yeoman-generator": "^0.18.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  }
+}
