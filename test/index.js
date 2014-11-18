@@ -5,7 +5,10 @@ var assert = require('yeoman-generator').assert;
 describe('gblo generator', function () {
 
   var expected = [
-    'package.json'
+    'package.json',
+    '.gitignore',
+    '.csscomb.json',
+    'gulpfile.js'
   ];
 
   var expectedContent = [
