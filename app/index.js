@@ -11,12 +11,6 @@ module.exports = generators.Base.extend({
     this.template('_package.json', 'package.json');
   },
 
-  config: function () {
-    git(['config', '--get', 'github.user'], function (user) {
-      this.user = user || '';
-    }.bind(this));
-  },
-
   git: function () {
     this.spawnCommand('git', ['init']);
     this.copy('gitignore', '.gitignore');
@@ -37,6 +31,12 @@ module.exports = generators.Base.extend({
         'notes.rewriteref',
         'refs/notes/*'
     ]);
+  },
+
+  user: function () {
+    git(['config', '--get', 'github.user'], function (user) {
+      this.user = user || '';
+    }.bind(this));
   },
 
   createRepo: function () {

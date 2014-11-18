@@ -66,5 +66,4 @@ describe('gblo generator', function () {
       done();
     });
   });
-
 });
