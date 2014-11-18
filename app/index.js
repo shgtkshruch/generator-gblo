@@ -4,7 +4,8 @@ module.exports = generators.Base.extend({
   constructor: function() {
     generators.Base.apply(this, arguments);
   },
-  method: function () {
-    console.log('hello yeoman');
+
+  packageJson: function () {
+    this.template('_package.json', 'package.json');
   }
 });
