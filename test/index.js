@@ -50,20 +50,17 @@ describe('gblo generator', function () {
           done();
         });
       });
-
-      it('create expected remote config', function (done) {
-        git(['config', '--get', 'remote.origin.url'], function (res) {
-          assert.deepEqual(res, 'git@github.com:shgtkshruch/tmp.git');
-          done();
-        });
-      });
     });
   });
 
   after(function (done) {
-    new Github('shgtkshruch', 'tmp').delete(function (err, res) {
-      if (err) throw new Error(err);
+    if (process.env.GITHUB_TOKEN) {
+      new Github('shgtkshruch', 'tmp').delete(function (err, res) {
+        if (err) throw new Error(err);
+        done();
+      });
+    } else {
       done();
-    });
+    }
   });
 });

@@ -11,6 +11,12 @@ module.exports = generators.Base.extend({
     this.template('_package.json', 'package.json');
   },
 
+  user: function () {
+    git(['config', '--get', 'github.user'], function (user) {
+      this.user = user || '';
+    }.bind(this));
+  },
+
   git: function () {
     this.spawnCommand('git', ['init']);
     this.copy('gitignore', '.gitignore');
@@ -33,14 +39,8 @@ module.exports = generators.Base.extend({
     ]);
   },
 
-  user: function () {
-    git(['config', '--get', 'github.user'], function (user) {
-      this.user = user || '';
-    }.bind(this));
-  },
-
   createRepo: function () {
-    if (this.user) {
+    if (process.env.GITHUB_TOKEN) {
       var done = this.async();
       new Github(this.user, this.appname).create(function (err, res) {
         if (err) throw new Error(err);
