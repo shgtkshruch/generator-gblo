@@ -11,18 +11,25 @@ module.exports = generators.Base.extend({
     this.template('_package.json', 'package.json');
   },
 
+  // git
+  init: function () {
+    var done = this.async();
+    git(['init'], function (res) {
+      done();
+    });
+  },
+
+  ignore: function () {
+    this.copy('gitignore', '.gitignore');
+  },
+
   user: function () {
     git(['config', '--get', 'github.user'], function (user) {
       this.user = user || '';
     }.bind(this));
   },
 
-  git: function () {
-    this.spawnCommand('git', ['init']);
-    this.copy('gitignore', '.gitignore');
-  },
-
-  gitConfig: function () {
+  notes: function () {
     this.spawnCommand('git', [
         'config',
         '--local',
@@ -39,7 +46,7 @@ module.exports = generators.Base.extend({
     ]);
   },
 
-  createRepo: function () {
+  repo: function () {
     if (process.env.GITHUB_TOKEN) {
       var done = this.async();
       new Github(this.user, this.appname).create(function (err, res) {
