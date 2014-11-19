@@ -18,7 +18,7 @@ describe('gblo generator', function () {
 
   var expectedContent = [
     ['package.json', /"name": "tmp"/],
-    ['app/index.jade', /title\(tmp\)/]
+    ['app/index.jade', /title tmp/]
   ];
 
   var expectedGit = 'notes.displayref refs/notes/*\nnotes.rewriteref refs/notes/*';
