@@ -72,5 +72,13 @@ module.exports = generators.Base.extend({
     this.template('index.jade', 'app/index.jade');
     this.copy('style.scss', 'app/styles/style.scss');
     this.copy('script.coffee', 'app/scripts/script.coffee');
+  },
+
+  install: function () {
+    this.installDependencies({
+      npm: true,
+      bower: false,
+      skipInstall: this.options['skip-install'],
+    });
   }
 });

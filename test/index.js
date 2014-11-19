@@ -23,32 +23,21 @@ describe('gblo generator', function () {
 
   var expectedGit = 'notes.displayref refs/notes/*\nnotes.rewriteref refs/notes/*';
 
-  var runGen;
-
-  before(function() {
-    runGen = helpers
-      .run(path.join(__dirname, '../app'))
-      .inDir(path.join(__dirname, '.tmp'));
+  before(function(done) {
+    helpers.testDirectory(path.join(__dirname, '.tmp'), function () {
+      this.gblo = helpers.createGenerator('gblo', ['../../app']);
+      this.gblo.options['skip-install'] = true;
+      done();
+    }.bind(this));
   });
 
-  describe('run generator', function () {
-
-    describe('file', function () {
-      it('create expexted files', function (done) {
-        runGen.on('end', function () {
-          assert.file(expected);
-          assert.fileContent(expectedContent);
-          done();
-        });
-      });
-    });
-
-    describe('git', function () {
-      it('create expected notes config', function (done) {
-        git(['config', '--get-regexp', 'notes'], function (res) {
-          assert.deepEqual(res, expectedGit);
-          done();
-        });
+  it('should create expexted files', function (done) {
+    this.gblo.run({}, function () {
+      assert.file(expected);
+      assert.fileContent(expectedContent);
+      git(['config', '--get-regexp', 'notes'], function (res) {
+        assert.deepEqual(res, expectedGit);
+        done();
       });
     });
   });
