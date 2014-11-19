@@ -1,6 +1,6 @@
 var generators = require('yeoman-generator');
 var Github = require('../lib/github');
-var git = require('../lib/git');
+var cp = require('../lib/cp');
 
 module.exports = generators.Base.extend({
   constructor: function() {
@@ -14,7 +14,7 @@ module.exports = generators.Base.extend({
   // git
   init: function () {
     var done = this.async();
-    git(['init'], function (res) {
+    cp('git', ['init'], function (res) {
       done();
     });
   },
@@ -24,7 +24,7 @@ module.exports = generators.Base.extend({
   },
 
   user: function () {
-    git(['config', '--get', 'github.user'], function (user) {
+    cp('git', ['config', '--get', 'github.user'], function (user) {
       this.user = user || '';
     }.bind(this));
   },
@@ -85,7 +85,20 @@ module.exports = generators.Base.extend({
     this.installDependencies({
       npm: true,
       bower: false,
-      skipInstall: this.options['skip-install'],
+      skipInstall: this.options['skip-install']
     });
+  },
+
+  end: function () {
+    if (!this.options['skip-install']) {
+      var done = this.async();
+      cp('gulp', ['build'], function (res) {
+        cp('git', ['add', '.'], function (res) {
+          cp('git', ['commit', '-m', 'Initial commit'], function (res) {
+            done();
+          });
+        });
+      });
+    }
   }
 });

@@ -2,7 +2,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 var Github = require('../lib/github');
-var git = require('../lib/git');
+var cp = require('../lib/cp');
 
 describe('gblo generator', function () {
 
@@ -35,7 +35,7 @@ describe('gblo generator', function () {
     this.gblo.run({}, function () {
       assert.file(expected);
       assert.fileContent(expectedContent);
-      git(['config', '--get-regexp', 'notes'], function (res) {
+      cp('git', ['config', '--get-regexp', 'notes'], function (res) {
         assert.deepEqual(res, expectedGit);
         done();
       });
