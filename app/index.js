@@ -76,6 +76,7 @@ module.exports = generators.Base.extend({
   },
 
   app: function () {
+    this.template('README.md', 'README.md');
     this.template('index.jade', 'app/index.jade');
     this.copy('style.scss', 'app/styles/style.scss');
     this.copy('script.coffee', 'app/scripts/script.coffee');

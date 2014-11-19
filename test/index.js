@@ -10,6 +10,7 @@ describe('gblo generator', function () {
     'package.json',
     '.gitignore',
     '.csscomb.json',
+    'README.md',
     'gulpfile.js',
     'app/index.jade',
     'app/styles/style.scss',
@@ -17,6 +18,7 @@ describe('gblo generator', function () {
   ];
 
   var expectedContent = [
+    ['README.md', /# tmp/],
     ['package.json', /"name": "tmp"/],
     ['app/index.jade', /title tmp/]
   ];
